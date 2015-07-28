@@ -1,4 +1,4 @@
 dist/*
 source/node_modules/*
 .DS_Store
-.sass-cache/*
+source/.sass-cache/*

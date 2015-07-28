@@ -1,0 +1,79 @@
+
+//Transitions:
+@mixin transition($t) {
+    -webkit-transition: $t;
+    -moz-transition: $t;
+    -o-transition: $t;
+    transition: $t;
+}
+
+//Opacity:
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+//For Retina Images:
+@mixin image-2x($image, $width, $height) {
+  @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) {
+    /* on retina, use image thats scaled by 2 */
+    background-image: url($image);
+    background-size: $width $height;
+  }
+}
+
+
+//Breakpoint Mixin & Vars
+
+@mixin bp($point) {
+	/* Breakpoint Vars */
+	$desktop-size:1280px;
+	$sm-desktop-size:1000px;
+	$tablet-land:1024px;
+	$tablet-port:768px;
+	$mobile-port:680px;
+
+  @if $point == desktop {
+    @media (max-width: $desktop-size ) { @content; }
+  }
+  @else if $point == tablet-land {
+      @media (max-width: $tablet-land ) { @content; }
+  }
+  @else if $point == tablet {
+    @media (max-width: $tablet-port) { @content; }
+  }
+  @else if $point == mobile {
+    @media (max-width: $mobile-port)  { @content; }
+  }
+}
+
+//Pixel to EM convert;
+$browser-context: 16; // Default font size
+@function em($pixels, $context: $browser-context) {
+  @return #{$pixels/$context}em
+}
+
+//font sizes:
+$font-sm: 12;
+$font-md: 16;
+$font-lg: 18;
+$font-xl: 25;
+
+//aspect ratio set
+@mixin maintain-ratio($ratio: 1 1) {
+  @if length($ratio) < 2 or length($ratio) > 2 {
+    @warn "$ratio must be a list with two values.";
+  }
+ 
+  $width: 100%;
+  $height: percentage(nth($ratio, 2) / nth($ratio, 1));
+  
+  width: $width;
+  height: 0;
+  padding-bottom: $height;
+}

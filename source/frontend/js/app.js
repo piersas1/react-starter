@@ -1,0 +1,1 @@
+var MainApp = require('./components/main.js');
